@@ -7,7 +7,7 @@ text4 = Se han eliminado el fichero ejecutable y los ficheros objetos.
 CC=g++
 CXXFLAGS=-g -std=c++14
 
-OBJS = src/grammar2CNF.o
+OBJS = src/grammar2CNF.o src/grammar.o
 
 all: ${OBJS}
 	@echo $(text0)

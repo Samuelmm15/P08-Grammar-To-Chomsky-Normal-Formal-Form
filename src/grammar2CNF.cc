@@ -18,6 +18,14 @@
 #include <algorithm>
 #include <regex>
 
+std::istream& operator>>(std::istream& input, std::vector<std::string>& vector_chains) {
+  std::string line;
+  while (std::getline(input, line)) {
+    vector_chains.push_back(line);
+  }
+  return input;
+}
+
 int main(int argc, char** argv) {
   if (argc == 3) {
     std::string input_file_name = argv[1];
@@ -31,6 +39,8 @@ int main(int argc, char** argv) {
       std::cout << "El formato correcto de los ficheros es `*.gra`" << std::endl;
       std::cout << "Para más información, haga uso de: ./grammar2CNF (-h || --help)" << std::endl;
       return 2; /// Error de tipo 2
+
+      /// COMIENZA EL PROGRAMA
     }
   } else {
     std::string option = argv[1];
