@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #pragma once
 
@@ -24,7 +25,7 @@
  */
 class Grammar {
  public:
-  Grammar();
+  Grammar(std::vector<std::string> grammar_file_lines_vector);
   void setNumberOfTerminalSymbols(int number_of_terminal_symbols);
   void setNumberOfNonTerminalSymbols(int number_of_non_terminal_symbols);
   void setTerminalSymbols(std::vector<std::string> terminal_symbols);

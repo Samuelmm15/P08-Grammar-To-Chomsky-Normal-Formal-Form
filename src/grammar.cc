@@ -17,7 +17,25 @@
  * @brief This is the constructor of the object grammar.
  * 
  */
-Grammar::Grammar(){};
+Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
+  /// TENER EN CUENTA QUE LA GRAMÁTICA NO PUEDE TENER PRODUCCIONES VACÍAS, NI UNITARIAS, SI LAS TIENE, TERMINAR EL PROGRAMA
+//   for (int i = 0; i < grammar_file_lines_vector.size(); i++) {
+//     std::cout << grammar_file_lines_vector[i] << std::endl;
+//   }
+    setNumberOfTerminalSymbols(std::stoi(grammar_file_lines_vector[0])); /// Número de símbolos terminales
+    for (int i = 1; i < number_of_terminal_symbols_ + 1; i++) {
+      terminal_symbols_.push_back(grammar_file_lines_vector[i]); /// Símbolos terminales
+    }
+    setNumberOfNonTerminalSymbols(std::stoi(grammar_file_lines_vector[number_of_terminal_symbols_ + 1])); /// Número de símbolos no terminales
+    for (int i = number_of_terminal_symbols_ + 2; i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 2; i++) {
+      non_terminal_symbols_.push_back(grammar_file_lines_vector[i]); /// Símbolos no terminales
+    }
+    setInitialSymbol(grammar_file_lines_vector[number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 2]); /// Símbolo inicial
+    setNumberOfProductions(std::stoi(grammar_file_lines_vector[number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 3])); /// Número de producciones
+    for (int i = number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 4; i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + number_of_productions_ + 4; i++) {
+      productions_.push_back(grammar_file_lines_vector[i]); /// Producciones
+    }
+};
 
 /**
  * @brief This method adds the number of terminal symbols of the grammar.

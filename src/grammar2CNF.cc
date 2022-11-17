@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <regex>
 
+#include "../include/grammar.h"
+
 std::istream& operator>>(std::istream& input, std::vector<std::string>& vector_chains) {
   std::string line;
   while (std::getline(input, line)) {
@@ -39,9 +41,15 @@ int main(int argc, char** argv) {
       std::cout << "El formato correcto de los ficheros es `*.gra`" << std::endl;
       std::cout << "Para más información, haga uso de: ./grammar2CNF (-h || --help)" << std::endl;
       return 2; /// Error de tipo 2
-
-      /// COMIENZA EL PROGRAMA
     }
+
+    /// Lectura del fichero de entrada
+    std::ifstream input_file(input_file_name);
+    std::vector<std::string> grammar_file_lines_vector;
+    input_file >> grammar_file_lines_vector;
+    input_file.close();
+    Grammar newGrammar(grammar_file_lines_vector);
+    newGrammar.PrintGrammar();
   } else {
     std::string option = argv[1];
     if (option == "--help" || option == "-h") {

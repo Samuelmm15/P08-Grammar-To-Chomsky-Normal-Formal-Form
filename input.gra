@@ -1,0 +1,16 @@
+2
+a
+b
+3
+S
+A
+B
+S
+6
+S--> aS
+S--> bA
+A--> aB
+A--> bB
+B--> aB
+B--> bB
+B -> &
