@@ -33,6 +33,7 @@ class Grammar {
   void setInitialSymbol(std::string initial_symbol);
   void setNumberOfProductions(int number_of_productions);
   void setProductions(std::vector<std::string> productions);
+  bool ProductionsComprobation();
   void PrintGrammar();
   void PrintGrammarToFile(std::string file_name);
 

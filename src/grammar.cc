@@ -35,6 +35,13 @@ Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
     for (int i = number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 4; i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + number_of_productions_ + 4; i++) {
       productions_.push_back(grammar_file_lines_vector[i]); /// Producciones
     }
+    
+    if (ProductionsComprobation() == false) {
+      std::cout << "ERROR >>> La gramática no es correcta, por favor, revise el fichero de entrada." << std::endl;
+      std::cout << "Compruebe que no hay producciones vacías, ni unitarias." << std::endl;
+      std::cout << "Para más información, haga uso de: ./grammar2CNF (--help | -h)" << std::endl;
+      exit(1);
+    }
 };
 
 /**
@@ -100,6 +107,25 @@ void Grammar::setNumberOfProductions(int number_of_productions) {
  */
 void Grammar::setProductions(std::vector<std::string> productions) {
   productions_ = productions;
+};
+
+bool Grammar::ProductionsComprobation() {
+  /// Comprobación de que no hay producciones vacías ni unitarias
+    for (int i = 0; i < productions_.size(); i++) {
+        std::string production_auxiliary = productions_[i];
+        // for (int j = 0; j < production_auxiliary.size(); j++) {
+        //   std::cout << production_auxiliary[j] << std::endl;
+        // }
+        if (production_auxiliary[5] == '&') {
+            return false;
+        }
+        for (int j = 0; j < non_terminal_symbols_.size(); j++) {
+            if (production_auxiliary[5] == non_terminal_symbols_[j][0]) {
+                return false;
+            }
+        }
+    }
+    return true;
 };
 
 /**
