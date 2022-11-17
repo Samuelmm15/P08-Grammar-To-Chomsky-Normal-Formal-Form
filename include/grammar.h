@@ -25,6 +25,7 @@
  */
 class Grammar {
  public:
+  Grammar() = default;
   Grammar(std::vector<std::string> grammar_file_lines_vector);
   void setNumberOfTerminalSymbols(int number_of_terminal_symbols);
   void setNumberOfNonTerminalSymbols(int number_of_non_terminal_symbols);
@@ -34,6 +35,7 @@ class Grammar {
   void setNumberOfProductions(int number_of_productions);
   void setProductions(std::vector<std::string> productions);
   bool ProductionsComprobation();
+  void CNFGrammarConvertor();
   void PrintGrammar();
   void PrintGrammarToFile(std::string file_name);
 

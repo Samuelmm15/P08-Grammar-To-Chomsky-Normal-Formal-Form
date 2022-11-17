@@ -116,7 +116,7 @@ bool Grammar::ProductionsComprobation() {
         // for (int j = 0; j < production_auxiliary.size(); j++) {
         //   std::cout << production_auxiliary[j] << std::endl;
         // }
-        if (production_auxiliary[5] == '&') {
+        if (production_auxiliary[5] == '&' && production_auxiliary[0] != initial_symbol_[0]) {
             return false;
         }
         for (int j = 0; j < non_terminal_symbols_.size(); j++) {
@@ -126,6 +126,12 @@ bool Grammar::ProductionsComprobation() {
         }
     }
     return true;
+};
+
+void Grammar::CNFGrammarConvertor() {
+  /// Conversor de gramáticas, dónde se convierte la gramática dada en una gramática en forma normal de chomsky
+    Grammar CNF_grammar; /// Gramática en forma normal de chomsky
+    
 };
 
 /**
