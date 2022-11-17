@@ -20,7 +20,18 @@
 
 int main(int argc, char** argv) {
   if (argc == 3) {
-
+    std::string input_file_name = argv[1];
+    std::string output_file_name = argv[2];
+    
+    /// Comprobación del formato de los ficheros introducidos
+    std::regex files_format(".*\\.gra");
+    if (!std::regex_match(input_file_name, files_format) || !std::regex_match(output_file_name, files_format)) {
+      std::cout << std::endl;
+      std::cout << "ERROR >>> Los ficheros introducidos no tienen el formato correcto." << std::endl;
+      std::cout << "El formato correcto de los ficheros es `*.gra`" << std::endl;
+      std::cout << "Para más información, haga uso de: ./grammar2CNF (-h || --help)" << std::endl;
+      return 2; /// Error de tipo 2
+    }
   } else {
     std::string option = argv[1];
     if (option == "--help" || option == "-h") {
@@ -30,7 +41,7 @@ int main(int argc, char** argv) {
     } else {
       std::cout << std::endl;
       std::cout << "ERROR >>> Opción no soportada. Haga uso de la opción --help o -h para obtener más información." << std::endl;
-      return 1;
+      return 1; /// Error de tipo 1
     }
     /// Opción por defecto de error.
     std::cout << std::endl;
