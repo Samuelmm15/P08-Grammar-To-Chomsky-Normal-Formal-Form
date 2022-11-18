@@ -35,7 +35,9 @@ Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
     for (int i = number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 4; i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + number_of_productions_ + 4; i++) {
       std::pair<std::string, std::string> production;
       production.first = grammar_file_lines_vector[i].substr(0, 1); /// Símbolo no terminal de la producción
+      std::cout << production.first << std::endl;
       production.second = grammar_file_lines_vector[i].substr(3, grammar_file_lines_vector[i].size() - 3); /// Símbolo terminal de la producción
+      std::cout << production.second << std::endl;
       productions_.push_back(production); /// Producciones
     }
     
