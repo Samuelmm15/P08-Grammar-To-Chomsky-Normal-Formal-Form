@@ -108,27 +108,27 @@ void Grammar::setNumberOfProductions(int number_of_productions) {
  * 
  * @param productions Is the different productions of the grammar.
  */
-// void Grammar::setProductions(std::vector<std::pair<std::string, std::string>> productions) {
-//   productions_ = productions;
-// };
+void Grammar::setProductions(std::vector<std::pair<std::string, std::string>> productions) {
+  productions_ = productions;
+};
 
 bool Grammar::ProductionsComprobation() {
-  // /// Comprobación de que no hay producciones vacías ni unitarias
-  //   for (int i = 0; i < productions_.size(); i++) {
-  //       std::string production_auxiliary = productions_[i];
-  //       // for (int j = 0; j < production_auxiliary.size(); j++) {
-  //       //   std::cout << production_auxiliary[j] << std::endl;
-  //       // }
-  //       if (production_auxiliary[6] == '&' && production_auxiliary[0] != initial_symbol_[0]) {
-  //           return false;
-  //       }
-  //       for (int j = 0; j < non_terminal_symbols_.size(); j++) {
-  //           if (production_auxiliary[6] == non_terminal_symbols_[j][0]) {
-  //               return false;
-  //           }
-  //       }
-  //   }
-  //   return true;
+  /// Comprobación de que no hay producciones vacías ni unitarias
+    for (int i = 0; i < productions_.size(); i++) {
+        std::string production_auxiliary = productions_[i].second;
+        // for (int j = 0; j < production_auxiliary.size(); j++) {
+        //   std::cout << production_auxiliary[j] << std::endl;
+        // }
+        if (production_auxiliary[3] == '&' && production_auxiliary[3] != initial_symbol_[0]) {
+            return false;
+        }
+        for (int j = 0; j < non_terminal_symbols_.size(); j++) {
+            if (production_auxiliary[3] == non_terminal_symbols_[j][0]) {
+                return false;
+            }
+        }
+    }
+    return true;
 };
 
 void Grammar::CNFGrammarConvertor() {
