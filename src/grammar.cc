@@ -33,7 +33,10 @@ Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
     setInitialSymbol(grammar_file_lines_vector[number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 2]); /// Símbolo inicial
     setNumberOfProductions(std::stoi(grammar_file_lines_vector[number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 3])); /// Número de producciones
     for (int i = number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 4; i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + number_of_productions_ + 4; i++) {
-      productions_.push_back(grammar_file_lines_vector[i]); /// Producciones
+      std::pair<std::string, std::string> production;
+      production.first = grammar_file_lines_vector[i].substr(0, 1); /// Símbolo no terminal de la producción
+      production.second = grammar_file_lines_vector[i].substr(3, grammar_file_lines_vector[i].size() - 3); /// Símbolo terminal de la producción
+      productions_.push_back(production); /// Producciones
     }
     
     if (ProductionsComprobation() == false) {
@@ -105,72 +108,72 @@ void Grammar::setNumberOfProductions(int number_of_productions) {
  * 
  * @param productions Is the different productions of the grammar.
  */
-void Grammar::setProductions(std::vector<std::string> productions) {
-  productions_ = productions;
-};
+// void Grammar::setProductions(std::vector<std::pair<std::string, std::string>> productions) {
+//   productions_ = productions;
+// };
 
 bool Grammar::ProductionsComprobation() {
-  /// Comprobación de que no hay producciones vacías ni unitarias
-    for (int i = 0; i < productions_.size(); i++) {
-        std::string production_auxiliary = productions_[i];
-        // for (int j = 0; j < production_auxiliary.size(); j++) {
-        //   std::cout << production_auxiliary[j] << std::endl;
-        // }
-        if (production_auxiliary[6] == '&' && production_auxiliary[0] != initial_symbol_[0]) {
-            return false;
-        }
-        for (int j = 0; j < non_terminal_symbols_.size(); j++) {
-            if (production_auxiliary[6] == non_terminal_symbols_[j][0]) {
-                return false;
-            }
-        }
-    }
-    return true;
+  // /// Comprobación de que no hay producciones vacías ni unitarias
+  //   for (int i = 0; i < productions_.size(); i++) {
+  //       std::string production_auxiliary = productions_[i];
+  //       // for (int j = 0; j < production_auxiliary.size(); j++) {
+  //       //   std::cout << production_auxiliary[j] << std::endl;
+  //       // }
+  //       if (production_auxiliary[6] == '&' && production_auxiliary[0] != initial_symbol_[0]) {
+  //           return false;
+  //       }
+  //       for (int j = 0; j < non_terminal_symbols_.size(); j++) {
+  //           if (production_auxiliary[6] == non_terminal_symbols_[j][0]) {
+  //               return false;
+  //           }
+  //       }
+  //   }
+  //   return true;
 };
 
 void Grammar::CNFGrammarConvertor() {
-  /// Transformación de una CFG a su Forma Normal de Chomsky
-  Grammar CNF_grammar;
-  /// Transformación de los símbolos terminales en no terminales
-  std::string non_terminal_symbols_auxiliary = "SABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  std::vector<std::string> new_productions_auxiliary;
-  int number_of_new_productions = 0;
-  for (int i = 0; i < productions_.size(); i++) {
-    std::string auxiliary_production = productions_[i];
-    std::string new_production;
-    for (int j = 0; j < auxiliary_production.size(); j++) {
-      if (j >= 6) {
-        for (int k = 0; k < terminal_symbols_.size(); k++) {
-          if (auxiliary_production[j] == terminal_symbols_[k][0]) {
-            int counter = 0;
-            for (int l = 0; l < non_terminal_symbols_auxiliary.size(); l++) {
-              if (non_terminal_symbols_auxiliary[l] == non_terminal_symbols_[counter][0]) {
-                counter++;
-              } else {
-                new_production.push_back(non_terminal_symbols_auxiliary[l]);
-                non_terminal_symbols_auxiliary.erase(l, 1);
-                new_production.push_back(' ');
-                new_production.push_back('-');
-                new_production.push_back('-');
-                new_production.push_back('>');
-                new_production.push_back(' ');
-                new_production.push_back(terminal_symbols_[k][0]);
-                new_productions_auxiliary.push_back(new_production);
-                number_of_new_productions++;
-                break;
-              }
-            }
-          }
-        }
-      }
-    }
-    if (number_of_new_productions == terminal_symbols_.size()) {
-      i = productions_.size();
-    }
-  }
-  for (int i = 0; i < new_productions_auxiliary.size(); i++) {
-    productions_.push_back(new_productions_auxiliary[i]);
-  }
+  // /// Transformación de una CFG a su Forma Normal de Chomsky
+  // Grammar CNF_grammar;
+  // /// Transformación de los símbolos terminales en no terminales
+  // std::string non_terminal_symbols_auxiliary = "SABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  // std::vector<std::string> new_productions_auxiliary;
+  // int number_of_new_productions = 0;
+  // for (int i = 0; i < productions_.size(); i++) {
+  //   std::string auxiliary_production = productions_[i];
+  //   std::string new_production;
+  //   for (int j = 0; j < auxiliary_production.size(); j++) {
+  //     if (j >= 6) {
+  //       for (int k = 0; k < terminal_symbols_.size(); k++) {
+  //         if (auxiliary_production[j] == terminal_symbols_[k][0]) {
+  //           int counter = 0;
+  //           for (int l = 0; l < non_terminal_symbols_auxiliary.size(); l++) {
+  //             if (non_terminal_symbols_auxiliary[l] == non_terminal_symbols_[counter][0]) {
+  //               counter++;
+  //             } else {
+  //               new_production.push_back(non_terminal_symbols_auxiliary[l]);
+  //               non_terminal_symbols_auxiliary.erase(l, 1);
+  //               new_production.push_back(' ');
+  //               new_production.push_back('-');
+  //               new_production.push_back('-');
+  //               new_production.push_back('>');
+  //               new_production.push_back(' ');
+  //               new_production.push_back(terminal_symbols_[k][0]);
+  //               new_productions_auxiliary.push_back(new_production);
+  //               number_of_new_productions++;
+  //               break;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   if (number_of_new_productions == terminal_symbols_.size()) {
+  //     i = productions_.size();
+  //   }
+  // }
+  // for (int i = 0; i < new_productions_auxiliary.size(); i++) {
+  //   productions_.push_back(new_productions_auxiliary[i]);
+  // }
 };
 
 /**
@@ -201,7 +204,8 @@ void Grammar::PrintGrammar() {
   std::cout << "Producciones: " << std::endl;
   ;
   for (int i = 0; i < productions_.size(); i++) {
-    std::cout << productions_[i] << std::endl;
+    std::cout << productions_[i].first << productions_[i].second
+              << std::endl;
   }
 };
 
@@ -211,20 +215,20 @@ void Grammar::PrintGrammar() {
  * @param file_name Is the name of the output file.
  */
 void Grammar::PrintGrammarToFile(std::string file_name) {
-  std::fstream output_file;
-  output_file.open(file_name, std::ios::out);
-  output_file << number_of_terminal_symbols_ << std::endl;
-  for (int i = 0; i < number_of_terminal_symbols_; i++) {
-    output_file << terminal_symbols_[i] << std::endl;
-  }
-  output_file << number_of_non_terminal_symbols_ << std::endl;
-  for (int i = 0; i < number_of_non_terminal_symbols_; i++) {
-    output_file << non_terminal_symbols_[i] << std::endl;
-  }
-  output_file << initial_symbol_ << std::endl;
-  output_file << number_of_productions_ << std::endl;
-  for (int i = 0; i < productions_.size(); i++) {
-    output_file << productions_[i] << std::endl;
-  }
-  output_file.close();
+  // std::fstream output_file;
+  // output_file.open(file_name, std::ios::out);
+  // output_file << number_of_terminal_symbols_ << std::endl;
+  // for (int i = 0; i < number_of_terminal_symbols_; i++) {
+  //   output_file << terminal_symbols_[i] << std::endl;
+  // }
+  // output_file << number_of_non_terminal_symbols_ << std::endl;
+  // for (int i = 0; i < number_of_non_terminal_symbols_; i++) {
+  //   output_file << non_terminal_symbols_[i] << std::endl;
+  // }
+  // output_file << initial_symbol_ << std::endl;
+  // output_file << number_of_productions_ << std::endl;
+  // for (int i = 0; i < productions_.size(); i++) {
+  //   output_file << productions_[i] << std::endl;
+  // }
+  // output_file.close();
 };

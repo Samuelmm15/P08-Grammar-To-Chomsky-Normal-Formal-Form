@@ -16,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <utility>
 
 #pragma once
 
@@ -33,7 +34,7 @@ class Grammar {
   void setNonTerminalSymbols(std::vector<std::string> non_terminal_symbols);
   void setInitialSymbol(std::string initial_symbol);
   void setNumberOfProductions(int number_of_productions);
-  void setProductions(std::vector<std::string> productions);
+  void setProductions(std::vector<std::pair<std::string, std::string>> productions);
   bool ProductionsComprobation();
   void CNFGrammarConvertor();
   void PrintGrammar();
@@ -46,5 +47,5 @@ class Grammar {
   std::vector<std::string> non_terminal_symbols_;
   std::string initial_symbol_;
   int number_of_productions_;
-  std::vector<std::string> productions_;
+  std::vector<std::pair<std::string, std::string>> productions_;
 };
