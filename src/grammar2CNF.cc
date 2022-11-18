@@ -49,8 +49,8 @@ int main(int argc, char** argv) {
     input_file >> grammar_file_lines_vector;
     input_file.close();
     Grammar newGrammar(grammar_file_lines_vector);
-    newGrammar.PrintGrammar();
     newGrammar.CNFGrammarConvertor();
+    newGrammar.PrintGrammar();
   } else {
     std::string option = argv[1];
     if (option == "--help" || option == "-h") {

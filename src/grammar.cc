@@ -131,7 +131,46 @@ bool Grammar::ProductionsComprobation() {
 void Grammar::CNFGrammarConvertor() {
   /// Transformación de una CFG a su Forma Normal de Chomsky
   Grammar CNF_grammar;
-  /// Eliminación de aquellas producciones mayores que 2
+  /// Transformación de los símbolos terminales en no terminales
+  std::string non_terminal_symbols_auxiliary = "SABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  std::vector<std::string> new_productions_auxiliary;
+  int number_of_new_productions = 0;
+  for (int i = 0; i < productions_.size(); i++) {
+    std::string auxiliary_production = productions_[i];
+    std::string new_production;
+    for (int j = 0; j < auxiliary_production.size(); j++) {
+      if (j >= 6) {
+        for (int k = 0; k < terminal_symbols_.size(); k++) {
+          if (auxiliary_production[j] == terminal_symbols_[k][0]) {
+            int counter = 0;
+            for (int l = 0; l < non_terminal_symbols_auxiliary.size(); l++) {
+              if (non_terminal_symbols_auxiliary[l] == non_terminal_symbols_[counter][0]) {
+                counter++;
+              } else {
+                new_production.push_back(non_terminal_symbols_auxiliary[l]);
+                non_terminal_symbols_auxiliary.erase(l, 1);
+                new_production.push_back(' ');
+                new_production.push_back('-');
+                new_production.push_back('-');
+                new_production.push_back('>');
+                new_production.push_back(' ');
+                new_production.push_back(terminal_symbols_[k][0]);
+                new_productions_auxiliary.push_back(new_production);
+                number_of_new_productions++;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+    if (number_of_new_productions == terminal_symbols_.size()) {
+      i = productions_.size();
+    }
+  }
+  for (int i = 0; i < new_productions_auxiliary.size(); i++) {
+    productions_.push_back(new_productions_auxiliary[i]);
+  }
 };
 
 /**
