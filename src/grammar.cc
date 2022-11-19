@@ -202,7 +202,9 @@ void Grammar::CNFGrammarConvertor() {
         std:: string new_production_auxiliary;
         for (int k = 0; k < counter; k++) {
           new_production_auxiliary.push_back(auxiliary_production[j]);
-          j++;
+          if (k == 0) {
+            j++;
+          }
         }
         /// Una vez tenemos el par de no terminal, generamos los nuevos no terminales
         int counter_auxiliary = 0;
@@ -215,8 +217,16 @@ void Grammar::CNFGrammarConvertor() {
             number_of_non_terminal_symbols_++;
             non_terminal_symbols_auxiliary.erase(l, 1);
             new_production.second = new_production_auxiliary;
-            productions_.push_back(new_production);
-            number_of_productions_++;
+            bool comprobation_flag = false;
+            for (int m = 0; m < productions_.size(); m++) {
+              if (productions_[m].second == new_production.second) {
+                comprobation_flag = true;
+              }
+            }
+            if (comprobation_flag == false) {
+              productions_.push_back(new_production);
+              number_of_productions_++;
+            }
             break;
           }
         }
