@@ -3,6 +3,7 @@ text1 = Compilación del proyecto...
 text2 = Modo de empleo:
 text3 = ./grammar2CNF input.gra output.gra
 text4 = Se han eliminado el fichero ejecutable y los ficheros objetos.
+text5 = clear; make clean; make; clear; ./grammar2CNF input.gra output.gra
 
 CC=g++
 CXXFLAGS=-g -std=c++14

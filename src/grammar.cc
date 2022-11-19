@@ -141,7 +141,7 @@ void Grammar::CNFGrammarConvertor() {
     std::string auxiliary_production = productions_[i].second;
     std::pair<std::string, std::string> new_production;
     for (int j = 0; j < auxiliary_production.size(); j++) {
-      if (j >= 3) {
+      if (j >= 0) {
         for (int k = 0; k < terminal_symbols_.size(); k++) {
           if (auxiliary_production[j] == terminal_symbols_[k][0]) {
             int counter = 0;
@@ -150,6 +150,8 @@ void Grammar::CNFGrammarConvertor() {
                 counter++;
               } else {
                 new_production.first = non_terminal_symbols_auxiliary[l];
+                non_terminal_symbols_.push_back(new_production.first);
+                number_of_non_terminal_symbols_++;
                 non_terminal_symbols_auxiliary.erase(l, 1);
                 new_production.second = terminal_symbols_[k][0];
                 new_productions_auxiliary.push_back(new_production);
@@ -168,6 +170,29 @@ void Grammar::CNFGrammarConvertor() {
   for (int i = 0; i < new_productions_auxiliary.size(); i++) {
     productions_.push_back(new_productions_auxiliary[i]);
   }
+  /// En el punto anterior, se tienen las nuevas producciones con los símbolos terminales
+
+  /// Transformación de las producciones con símbolos terminales en los nuevos simbolos no terminales
+  for (int i = 0; i < productions_.size(); i++) {
+    std::string auxiliary_production = productions_[i].second;
+    for (int j = 0; j < auxiliary_production.size(); j++) {
+      for (int k = 0; k < terminal_symbols_.size(); k++) {
+        if (auxiliary_production[j] == terminal_symbols_[k][0]) {
+          for (int l = 0; l < productions_.size(); l++) {
+            if (productions_[l].second[0] == terminal_symbols_[k][0] && productions_[l].first[0] != productions_[i].first[0]) {
+              std::string new_production;
+              new_production.push_back(productions_[l].first[0]);
+              productions_[i].second.replace(j, 1, new_production);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /// En este punto anterior, se tiene la transformación de todas las producciones de manera que los terminales tienen estados no terminales y los terminales de las producciones son nuevos no terminales
+
+  /// Transformación de las producciones con más de dos símbolos no terminales
 };
 
 /**
