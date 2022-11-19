@@ -193,6 +193,36 @@ void Grammar::CNFGrammarConvertor() {
   /// En este punto anterior, se tiene la transformación de todas las producciones de manera que los terminales tienen estados no terminales y los terminales de las producciones son nuevos no terminales
 
   /// Transformación de las producciones con más de dos símbolos no terminales
+  for (int i = 0; i < productions_.size(); i++) {
+    std::string auxiliary_production = productions_[i].second;
+    if (auxiliary_production.size() > 2) {
+      std::pair<std::string, std::string> new_production;
+      int counter = 2;
+      for (int j = 0; j < auxiliary_production.size(); j++) {
+        std:: string new_production_auxiliary;
+        for (int k = 0; k < counter; k++) {
+          new_production_auxiliary.push_back(auxiliary_production[j]);
+          j++;
+        }
+        /// Una vez tenemos el par de no terminal, generamos los nuevos no terminales
+        int counter_auxiliary = 0;
+        for (int l = 0; l < non_terminal_symbols_auxiliary.size(); l++) {
+          if (non_terminal_symbols_auxiliary[l] == non_terminal_symbols_[counter_auxiliary][0]) {
+            counter_auxiliary++;
+          } else {
+            new_production.first = non_terminal_symbols_auxiliary[l];
+            non_terminal_symbols_.push_back(new_production.first);
+            number_of_non_terminal_symbols_++;
+            non_terminal_symbols_auxiliary.erase(l, 1);
+            new_production.second = new_production_auxiliary;
+            productions_.push_back(new_production);
+            number_of_productions_++;
+            break;
+          }
+        }
+      }
+    }
+  }
 };
 
 /**
