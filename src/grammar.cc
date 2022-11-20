@@ -1,7 +1,7 @@
 /**
  * @file grammar.cc
  * @author Samuel Martín Morales (alu0101359526@ull.edu.es)
- * @brief
+ * @brief This file contains the implementation of the different methods of the Grammar class.
  * @version 0.1
  * @date 2022-11-17
  * @signature Computabilidad y Algoritmia.
@@ -18,33 +18,28 @@
  *
  */
 Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
-  /// TENER EN CUENTA QUE LA GRAMÁTICA NO PUEDE TENER PRODUCCIONES VACÍAS, NI
-  /// UNITARIAS, SI LAS TIENE, TERMINAR EL PROGRAMA
-    // for (int i = 0; i < grammar_file_lines_vector.size(); i++) {
-    //   std::cout << grammar_file_lines_vector[i] << std::endl;
-    // }
   setNumberOfTerminalSymbols(std::stoi(
-      grammar_file_lines_vector[0]));  /// Número de símbolos terminales
+      grammar_file_lines_vector[0]));  /// Number of terminal symbols
   for (int i = 1; i < number_of_terminal_symbols_ + 1; i++) {
     terminal_symbols_.push_back(
-        grammar_file_lines_vector[i]);  /// Símbolos terminales
+        grammar_file_lines_vector[i]);  /// Terminal symbols
   }
   setNumberOfNonTerminalSymbols(std::stoi(
       grammar_file_lines_vector[number_of_terminal_symbols_ +
-                                1]));  /// Número de símbolos no terminales
+                                1]));  /// Number of non-terminal symbols
   for (int i = number_of_terminal_symbols_ + 2;
        i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 2;
        i++) {
     non_terminal_symbols_.push_back(
-        grammar_file_lines_vector[i]);  /// Símbolos no terminales
+        grammar_file_lines_vector[i]);  /// non-terminal symbols
   }
   setInitialSymbol(grammar_file_lines_vector[number_of_terminal_symbols_ +
                                              number_of_non_terminal_symbols_ +
-                                             2]);  /// Símbolo inicial
+                                             2]);  /// Initial symbol
   setNumberOfProductions(
       std::stoi(grammar_file_lines_vector[number_of_terminal_symbols_ +
                                           number_of_non_terminal_symbols_ +
-                                          3]));  /// Número de producciones
+                                          3]));  /// Number of productions
   for (int i =
            number_of_terminal_symbols_ + number_of_non_terminal_symbols_ + 4;
        i < number_of_terminal_symbols_ + number_of_non_terminal_symbols_ +
@@ -52,11 +47,11 @@ Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
        i++) {
     std::pair<std::string, std::string> production;
     production.first = grammar_file_lines_vector[i].substr(
-        0, 1);  /// Símbolo no terminal de la producción
+        0, 1);  /// Non terminal symbols of the production
     production.second = grammar_file_lines_vector[i].substr(
         6, grammar_file_lines_vector[i].size() -
-               3);                       /// Símbolo terminal de la producción
-    productions_.push_back(production);  /// Producciones
+               3);                       /// Terminal symbols of the production
+    productions_.push_back(production);  /// Productions
   }
 
   if (ProductionsComprobation() == false) {
@@ -141,13 +136,15 @@ void Grammar::setProductions(
   productions_ = productions;
 };
 
+/**
+ * @brief This method returns if the introduced grammar have any definition problem
+ * 
+ * @return true if the grammar is correct
+ * @return false if the grammar is incorrect
+ */
 bool Grammar::ProductionsComprobation() {
-  /// Comprobación de que no hay producciones vacías ni unitarias
   for (int i = 0; i < productions_.size(); i++) {
     std::string production_auxiliary = productions_[i].second;
-    // for (int j = 0; j < production_auxiliary.size(); j++) {
-    //   std::cout << production_auxiliary[j] << std::endl;
-    // }
     if (production_auxiliary[0] == '&' &&
         productions_[i].first[0] != initial_symbol_[0]) {
       return false;
@@ -161,9 +158,12 @@ bool Grammar::ProductionsComprobation() {
   return true;
 };
 
+/**
+ * @brief This method converts any grammar at Chomsky Normal Form grammar.
+ * 
+ */
 void Grammar::CNFGrammarConvertor() {
-  /// Transformación de una CFG a su Forma Normal de Chomsky
-  /// Transformación de los símbolos terminales en no terminales
+  /// @brief Transformation of the terminal symbols into non-terminal symbols
   std::string non_terminal_symbols_auxiliary = "SABCDEFGHIJKLMNOPQRSTUVWXYZ";
   std::vector<std::pair<std::string, std::string>> new_productions_auxiliary;
   int number_of_new_productions = 0;
@@ -201,11 +201,8 @@ void Grammar::CNFGrammarConvertor() {
   for (int i = 0; i < new_productions_auxiliary.size(); i++) {
     productions_.push_back(new_productions_auxiliary[i]);
   }
-  /// En el punto anterior, se tienen las nuevas producciones con los símbolos
-  /// terminales
 
-  /// Transformación de las producciones con símbolos terminales en los nuevos
-  /// simbolos no terminales
+  /// @brief Transformation of productions with terminal symbols into the new ones
   for (int i = 0; i < productions_.size(); i++) {
     std::string auxiliary_production = productions_[i].second;
     for (int j = 0; j < auxiliary_production.size(); j++) {
@@ -224,12 +221,9 @@ void Grammar::CNFGrammarConvertor() {
     }
   }
 
-  /// En este punto anterior, se tiene la transformación de todas las
-  /// producciones de manera que los terminales tienen estados no terminales y
-  /// los terminales de las producciones son nuevos no terminales
+  /// @brief Transformation of productions with more than two non-terminal symbols
   bool repeat_flag = true;
   while (repeat_flag == true) {
-    /// Transformación de las producciones con más de dos símbolos no terminales
     for (int i = 0; i < productions_.size(); i++) {
       std::string auxiliary_production = productions_[i].second;
       if (auxiliary_production.size() > 2) {
@@ -244,8 +238,6 @@ void Grammar::CNFGrammarConvertor() {
             }
           }
 
-          /// Una vez tenemos el par de no terminal, generamos los nuevos no
-          /// terminales
           int counter_auxiliary = 0;
           for (int l = 0; l < non_terminal_symbols_auxiliary.size(); l++) {
             if (non_terminal_symbols_auxiliary[l] ==
@@ -273,7 +265,6 @@ void Grammar::CNFGrammarConvertor() {
         }
       }
     }
-    /// En este punto anterior, se tienen todas las producciones de tamaño dos
     for (int i = 0; i < productions_.size(); i++) {
       std::string auxiliary_production = productions_[i].second;
       if (auxiliary_production.size() > 2) {
@@ -304,8 +295,7 @@ void Grammar::CNFGrammarConvertor() {
       }
     }
 
-    /// Comprobación de que alguna producción sea mayor que dos y vuelta a
-    /// ejecutar el algoritmo
+    /// @brief  Comprobation if the production has more than two non-terminal symbols
     for (int i = 0; i < productions_.size(); i++) {
       if (productions_[i].second.size() > 2) {
         repeat_flag = true;

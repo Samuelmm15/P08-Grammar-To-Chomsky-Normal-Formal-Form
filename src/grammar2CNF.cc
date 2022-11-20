@@ -1,7 +1,7 @@
 /**
  * @file Grammar2CNF.cc
  * @author Samuel Martín Morales (alu0101359526@ull.edu.es)
- * @brief
+ * @brief This is the main program implementation file.
  * @version 0.1
  * @date 2022-11-17
  * @signature Computabilidad y Algoritmia.
@@ -20,6 +20,13 @@
 
 #include "../include/grammar.h"
 
+/**
+ * @brief This function returns the different lines of an input file.
+ * 
+ * @param input 
+ * @param vector_chains 
+ * @return std::istream& 
+ */
 std::istream& operator>>(std::istream& input,
                          std::vector<std::string>& vector_chains) {
   std::string line;
@@ -29,12 +36,19 @@ std::istream& operator>>(std::istream& input,
   return input;
 }
 
+/**
+ * @brief This is the main function.
+ * 
+ * @param argc The number of arguments.
+ * @param argv The arguments.
+ * @return int 
+ */
 int main(int argc, char** argv) {
   if (argc == 3) {
     std::string input_file_name = argv[1];
     std::string output_file_name = argv[2];
 
-    /// Comprobación del formato de los ficheros introducidos
+    /// @brief This comprobes the format of the introduced files
     std::regex files_format(".*\\.gra");
     if (!std::regex_match(input_file_name, files_format) ||
         !std::regex_match(output_file_name, files_format)) {
@@ -47,10 +61,9 @@ int main(int argc, char** argv) {
       std::cout
           << "Para más información, haga uso de: ./grammar2CNF (-h || --help)"
           << std::endl;
-      return 2;  /// Error de tipo 2
+      return 2;  /// Type error 2
     }
 
-    /// Lectura del fichero de entrada
     std::ifstream input_file(input_file_name);
     std::vector<std::string> grammar_file_lines_vector;
     input_file >> grammar_file_lines_vector;
@@ -71,13 +84,12 @@ int main(int argc, char** argv) {
       std::cout << "ERROR >>> Opción no soportada. Haga uso de la opción "
                    "--help o -h para obtener más información."
                 << std::endl;
-      return 1;  /// Error de tipo 1
+      return 1;  /// Type error 1
     }
-    /// Opción por defecto de error.
     std::cout << std::endl;
     std::cout << "ERROR >>> Opción no soportada. Haga uso de la opción --help "
                  "o -h para obtener más información."
               << std::endl;
-    return 1;
+    return 1; /// Type error 1
   }
 };

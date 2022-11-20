@@ -1,7 +1,7 @@
 /**
  * @file grammar.h
  * @author Samuel Martín Morales (alu0101359526@ull.edu.es)
- * @brief
+ * @brief This file contains the definition of the Grammar class.
  * @version 0.1
  * @date 2022-11-17
  * @signature Computabilidad y Algoritmia.
