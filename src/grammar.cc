@@ -20,9 +20,9 @@
 Grammar::Grammar(std::vector<std::string> grammar_file_lines_vector) {
   /// TENER EN CUENTA QUE LA GRAMÁTICA NO PUEDE TENER PRODUCCIONES VACÍAS, NI
   /// UNITARIAS, SI LAS TIENE, TERMINAR EL PROGRAMA
-  //   for (int i = 0; i < grammar_file_lines_vector.size(); i++) {
-  //     std::cout << grammar_file_lines_vector[i] << std::endl;
-  //   }
+    // for (int i = 0; i < grammar_file_lines_vector.size(); i++) {
+    //   std::cout << grammar_file_lines_vector[i] << std::endl;
+    // }
   setNumberOfTerminalSymbols(std::stoi(
       grammar_file_lines_vector[0]));  /// Número de símbolos terminales
   for (int i = 1; i < number_of_terminal_symbols_ + 1; i++) {
@@ -153,7 +153,7 @@ bool Grammar::ProductionsComprobation() {
       return false;
     }
     for (int j = 0; j < non_terminal_symbols_.size(); j++) {
-      if (production_auxiliary[0] == non_terminal_symbols_[j][0]) {
+      if (production_auxiliary[0] == non_terminal_symbols_[j][0] && production_auxiliary.size() == 1) {
         return false;
       }
     }

@@ -1,7 +1,7 @@
 2
 a
 b
-7
+15
 S
 A
 B
@@ -9,14 +9,31 @@ C
 D
 E
 F
+G
+H
+I
+J
+K
+L
+M
+N
 S
-9
+18
 S --> CS
 S --> DA
-A --> BF
+S --> EF
+A --> BH
 A --> DB
+A --> IJ
 B --> CB
 B --> DB
+B --> KI
+B --> JJ
 C --> a
 D --> b
-F --> BC
+E --> BA
+F --> CC
+H --> BC
+I --> BB
+J --> AD
+K --> CD

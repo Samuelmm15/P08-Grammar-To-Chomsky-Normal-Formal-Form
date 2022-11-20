@@ -1,28 +1,28 @@
 /**
  * @file grammar.h
  * @author Samuel Martín Morales (alu0101359526@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-11-17
  * @signature Computabilidad y Algoritmia.
  * @course 2022-2023.
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
 #include <utility>
+#include <vector>
 
 #pragma once
 
 /**
  * @brief This is the class that represents the grammar.
- * 
+ *
  */
 class Grammar {
  public:
@@ -34,7 +34,8 @@ class Grammar {
   void setNonTerminalSymbols(std::vector<std::string> non_terminal_symbols);
   void setInitialSymbol(std::string initial_symbol);
   void setNumberOfProductions(int number_of_productions);
-  void setProductions(std::vector<std::pair<std::string, std::string>> productions);
+  void setProductions(
+      std::vector<std::pair<std::string, std::string>> productions);
   bool ProductionsComprobation();
   void CNFGrammarConvertor();
   void PrintGrammar();
