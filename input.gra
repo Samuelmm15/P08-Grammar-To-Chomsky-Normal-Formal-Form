@@ -9,7 +9,7 @@ S
 6
 S --> aS
 S --> bA
-A --> aB
+A --> aBBa
 A --> bB
 B --> aB
 B --> bB

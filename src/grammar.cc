@@ -233,6 +233,37 @@ void Grammar::CNFGrammarConvertor() {
       }
     }
   }
+
+  /// En este punto anterior, se tienen todas las producciones de tamaño dos
+  for (int i = 0; i < productions_.size(); i++) {
+    std::string auxiliary_production = productions_[i].second;
+    if (auxiliary_production.size() > 2) {
+      int counter = 2;
+      bool initial_comprobation_flag = false;
+      for (int j = 0; j < auxiliary_production.size(); j++) {
+        std::string auxiliary_sub_production;  
+        for (int k = 0; k < counter; k++) {
+          auxiliary_sub_production.push_back(auxiliary_production[j]);
+          if (k == 0) {
+            j++;
+          }
+        }
+        for (int l = 0; l < productions_.size(); l++) {
+          if (productions_[l].second == auxiliary_sub_production) {
+            std::string new_production;
+            new_production.push_back(productions_[l].first[0]);
+            productions_[i].second.erase(j - 1, 1);
+            if (initial_comprobation_flag == false) {
+              productions_[i].second.replace(j - 1, 1, new_production);
+            } else {
+              productions_[i].second.replace(j - 2, 1, new_production);
+            }
+            initial_comprobation_flag = true;
+          }
+        }
+      }
+    }
+  }
 };
 
 /**
